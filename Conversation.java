@@ -12,9 +12,9 @@ class Conversation implements Chatbot {
     /**
      * Constructor
      */
-    Conversation(int rounds, String words, ArrayList<String> transcript) {
-        this.rounds = rounds;
-        this.words = words;
+    Conversation() {
+        this.rounds = 0;
+        this.words = " ";
         this.transcript = new ArrayList<>();
     }
 
@@ -123,7 +123,7 @@ class Conversation implements Chatbot {
         ArrayList<String> initialTranscript = new ArrayList<>();
 
         // Create a new Conversation instance
-        Conversation myConversation = new Conversation(initialRounds, initialWords, initialTranscript);
+        Conversation myConversation = new Conversation();
 
         // Start the conversation
         myConversation.chat();
