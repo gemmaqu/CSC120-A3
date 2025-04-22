@@ -40,7 +40,7 @@ ___yes__ 1 pt: Prints transcript when terminating
 
 _____ (Kudos!) Handles mirror words with punctuation
 
-___yes__ (Kudos!) Generates output with correct punctuation & capitalization
+_____ (Kudos!) Generates output with correct punctuation & capitalization
 
 _____ (Kudos!) Handles you --> me/I dilemma
 

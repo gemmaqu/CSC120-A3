@@ -2,12 +2,21 @@ import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
 
+//!!!Please take a look at my reflection!!!Thank you!
+
 class Conversation implements Chatbot {
 
     // Attributes 
     int rounds;
     String words;
     ArrayList<String> transcript;
+    String[] cannedResponses = {
+        "Nice",
+        "Interesting!", 
+        "Good", 
+        "Okay!",
+        "Wow!"};
+    Random random = new Random();
 
     /**
      * Constructor
@@ -22,9 +31,6 @@ class Conversation implements Chatbot {
      * Starts and runs the conversation with the user
      */
     public void chat() {
-        /**
-         
-         */
         System.out.println("How many rounds?");
         Scanner input = new Scanner(System.in); //ask for user's input
         rounds = input.nextInt(); 
@@ -36,9 +42,13 @@ class Conversation implements Chatbot {
 
         for (int i = 0; i < rounds; i++) { //add use's reponse to transcrpt and print our reponse
             words = input.nextLine(); // go into ArrayList 'transcript'
-            transcript.add(words);
-            System.out.println(respond(words));
-            transcript.add(respond(words));
+            transcript.add(words);  
+
+        //By storing the response in a variable and using it for both printing and adding to the transcript, 
+        //I can ensure consistency in your conversation record.
+            String response = respond(words);
+            System.out.println(response);
+            transcript.add(response);
         }
         System.out.println("See ya!");
         transcript.add("See ya!");
@@ -61,21 +71,16 @@ class Conversation implements Chatbot {
      * @return mirrored or canned response to user input
      */
     public String respond(String words) { //Two ways: 1. for loop+case, 2. Use two Lists
-        String newWords[] = words.split(" ");
+        // Fix array declaration style
+        String[] newWords = words.split(" ");
 
-        String[] response = { //five random responses
-                "Nice",
-                "Interesting!",
-                "Good",
-                "Okay!",
-                "Wow!"
-        };
-        Random random = new Random();
-        int index = random.nextInt(5); //index is from 0-4
+        // Use the class-level cannedResponses and random
+        int index = random.nextInt(cannedResponses.length);
 
         boolean changed = false;
 
         //   to see if words match words
+        // have all the required mirror words
         for (int j = 0; j < newWords.length; j++) {
             if (newWords[j].equals("I")) {
                 newWords[j] = "You";
@@ -89,14 +94,21 @@ class Conversation implements Chatbot {
             } else if (newWords[j].equals("are")) {
                 newWords[j] = "am";
                 changed = true;
-            } else if (newWords[j].equals("my")) {
+            } else if (newWords[j].equals("My") || newWords[j].equals("my")) {
                 newWords[j] = "your";
                 changed = true;
-            } else if (newWords[j].equals("your")) {
+            }  else if (newWords[j].equals("Your") || newWords[j].equals("your")) {
                 newWords[j] = "my";
                 changed = true;
-            }
+            }  else if (newWords[j].equals("me")) {
+                newWords[j] = "you";
+                changed = true;
+            }else if (newWords[j].equals("feel")) {//to do some complex mirror such as "I feel" -> "You are"
+                newWords[j] = "are";
+                changed = true;
         }
+    }
+
         if (changed) {
             ArrayList<String> sentence = new ArrayList<>();
             for (String word : newWords) {
@@ -107,15 +119,11 @@ class Conversation implements Chatbot {
             String newSentence = String.join(" ", sentence);
             return newSentence;
         } else {
-            return response[index];
+            return cannedResponses[index];
         }
     }
-    //    public static void main(String[] arguments) {
-//
-//        Conversation myConversation = new Conversation(rounds, words, transcript);
-//        myConversation.chat();
-//        myConversation.printTranscript();
-//    }
+    
+
     public static void main(String[] args) {
         // Initialize with default values that will be overwritten in chat()
         int initialRounds = 0;
